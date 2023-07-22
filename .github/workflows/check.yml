@@ -1,31 +1,31 @@
 name: check
 
 on:
-  push:
-    branches: [ "gt" ]
-  pull_request:
-    branches: [ "gt" ]
+    push:
+        branches: ['main']
+    pull_request:
+        branches: ['main']
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+    build:
+        runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18.x, 19.x]
+        strategy:
+            matrix:
+                node-version: [18.x, 19.x]
 
-    steps:
-    - uses: actions/checkout@v3
+        steps:
+            - uses: actions/checkout@v3
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        
-    - name: Checkout submodules
-      run: git submodule update --init --recursive
-        
-    - name: Build
-      run: |
-        npm install
-        gulp build
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+
+            - name: Checkout submodules
+              run: git submodule update --init --recursive
+
+            - name: Build
+              run: |
+                  npm install
+                  gulp build
