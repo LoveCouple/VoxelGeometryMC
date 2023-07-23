@@ -15,7 +15,9 @@ import {
 	spawnParticles,
 	summonEntities,
 	eq_item,
-	eq_player
+	eq_player,
+	Vec3,
+	lift
 } from './effect';
 import { Sandbox } from './sandbox';
 import { tell_raw } from './utils';
@@ -78,7 +80,8 @@ export default class Session {
 			...V.Transform,
 			...V.LSystem,
 			...V.IFS,
-			...V.DLA
+			...V.DLA,
+			vec3: Vec3
 		});
 	}
 
@@ -95,6 +98,7 @@ export default class Session {
 			summonEntities,
 			spawnParticles,
 			location,
+			lift,
 			place: this.place,
 			brush: this.brush,
 			repeat: this.repeat,
@@ -103,7 +107,7 @@ export default class Session {
 	}
 
 	plot(space: Space, o = this.setting.origin, block = this.setting.block) {
-		return setBlocks(this.dimension())(block)(V.Transform.move(space, o.x, o.y, o.z));
+		return setBlocks(this.dimension())(block)(V.Transform.move(space, lift(o)));
 	}
 
 	place(blocks: Space = []): void {

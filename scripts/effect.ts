@@ -13,6 +13,7 @@ import * as VG from '@pureeval/voxel-geometry';
 type Space = VG.Vec3[];
 
 const Vec3 = (x: number, y: number, z: number) => new VG.Vec3(x, y, z);
+const lift = (v: Vector3) => new VG.Vec3(v.x, v.y, v.z);
 
 const setBlock = (dimension: Dimension) => (block: BlockType) => (pos: Vector3) => {
 	dimension.getBlock(pos)?.setType(block);
@@ -38,7 +39,7 @@ const spawnParticles = (dimension: Dimension) => (particle: string) => (space: S
 
 const summonEntities = (dimension: Dimension) => (entity: string) => (space: Space) =>
 	overSpace(space)(summonEntity(dimension)(entity));
-const location = (player: Player) => player.location;
+const location = (player: Player) => lift(player.location);
 
 const getBlock = (dimension: Dimension) => (pos: Vector3) => dimension.getBlock(pos)?.type;
 
@@ -60,6 +61,7 @@ const events = {
 
 export {
 	Vec3,
+	lift,
 	eq_item,
 	events,
 	setBlock,
