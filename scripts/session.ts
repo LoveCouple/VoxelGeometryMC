@@ -35,10 +35,6 @@ class Setting {
 		this.brush_item = 'minecraft:stick';
 	}
 
-	static bind(p: Player) {
-		return new Session(p);
-	}
-
 	setPosition(pos: Vector3) {
 		this.origin = pos;
 	}
@@ -66,6 +62,10 @@ export default class Session {
 		this.load_effect_functions();
 	}
 
+	static create(p: Player) {
+		return new Session(p);
+	}
+
 	welcome() {
 		this.broadcast(`${this.user.name}, Welcome to Voxel Geometry!`);
 	}
@@ -78,8 +78,7 @@ export default class Session {
 			...V.Transform,
 			...V.LSystem,
 			...V.IFS,
-			dla2d: V.DLA2D,
-			dla3d: V.DLA3D
+			...V.DLA
 		});
 	}
 
